@@ -6,5 +6,8 @@ use Livewire\Component;
 
 class NoAttributeComponent extends Component
 {
-    public function render() { return 'ok'; }
+    public function render()
+    {
+        return 'ok';
+    }
 }

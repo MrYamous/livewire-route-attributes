@@ -9,5 +9,8 @@ use Yamous\LivewireRouteAttributes\Attributes\Route;
 #[Route('/two', name: 'two')]
 class MultiComponent extends Component
 {
-    public function render() { return 'ok'; }
+    public function render()
+    {
+        return 'ok';
+    }
 }

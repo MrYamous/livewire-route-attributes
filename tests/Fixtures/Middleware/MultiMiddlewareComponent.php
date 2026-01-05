@@ -8,5 +8,8 @@ use Yamous\LivewireRouteAttributes\Attributes\Route;
 #[Route('/multi-middleware', middleware: ['auth', 'verified'])]
 class MultiMiddlewareComponent extends Component
 {
-    public function render() { return 'ok'; }
+    public function render()
+    {
+        return 'ok';
+    }
 }

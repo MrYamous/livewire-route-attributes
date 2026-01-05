@@ -8,5 +8,8 @@ use Yamous\LivewireRouteAttributes\Attributes\Route;
 #[Route('/anonymous', methods: ['GET'])]
 class AnonymousComponent extends Component
 {
-    public function render() { return 'ok'; }
+    public function render()
+    {
+        return 'ok';
+    }
 }

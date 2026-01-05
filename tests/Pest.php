@@ -1,7 +1,7 @@
 <?php
 
-use Yamous\LivewireRouteAttributes\Tests\TestCase;
 use Yamous\LivewireRouteAttributes\RouteRegistrar;
+use Yamous\LivewireRouteAttributes\Tests\TestCase;
 
 uses(TestCase::class)
     ->beforeEach(function () {

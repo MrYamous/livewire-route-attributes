@@ -4,11 +4,11 @@ use Illuminate\Support\Facades\Route;
 
 it('can register a single file', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/BooksComponent.php')
+        $this->getTestPath('Fixtures/BooksComponent.php'),
     );
 
-    $route = collect(Route::getRoutes())->first(fn ($r) =>
-        $r->getActionName() === \Yamous\LivewireRouteAttributes\Tests\Fixtures\BooksComponent::class
+    $route = collect(Route::getRoutes())->first(
+        fn($r) => Yamous\LivewireRouteAttributes\Tests\Fixtures\BooksComponent::class === $r->getActionName(),
     );
 
     expect($route)->not->toBeNull();
@@ -16,11 +16,11 @@ it('can register a single file', function () {
 
 it('can register a route with multiple HTTP methods', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/FormComponent.php')
+        $this->getTestPath('Fixtures/FormComponent.php'),
     );
 
     $route = collect(Route::getRoutes())
-        ->first(fn ($r) => $r->getActionName() === \Yamous\LivewireRouteAttributes\Tests\Fixtures\FormComponent::class);
+        ->first(fn($r) => Yamous\LivewireRouteAttributes\Tests\Fixtures\FormComponent::class === $r->getActionName());
 
     expect($route)->not->toBeNull();
     expect($route->methods)->toContain('GET');
@@ -29,11 +29,11 @@ it('can register a route with multiple HTTP methods', function () {
 
 it('can register a route without a name', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/AnonymousComponent.php')
+        $this->getTestPath('Fixtures/AnonymousComponent.php'),
     );
 
     $route = collect(Route::getRoutes())
-        ->first(fn ($r) => $r->getActionName() === \Yamous\LivewireRouteAttributes\Tests\Fixtures\AnonymousComponent::class);
+        ->first(fn($r) => Yamous\LivewireRouteAttributes\Tests\Fixtures\AnonymousComponent::class === $r->getActionName());
 
     expect($route)->not->toBeNull();
     expect($route->getName())->toBeNull();
@@ -41,11 +41,11 @@ it('can register a route without a name', function () {
 
 it('can register multiple routes on the same component', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/MultiComponent.php')
+        $this->getTestPath('Fixtures/MultiComponent.php'),
     );
 
     $routes = collect(Route::getRoutes())
-        ->filter(fn ($r) => $r->getActionName() === \Yamous\LivewireRouteAttributes\Tests\Fixtures\MultiComponent::class);
+        ->filter(fn($r) => Yamous\LivewireRouteAttributes\Tests\Fixtures\MultiComponent::class === $r->getActionName());
 
     expect($routes)->toHaveCount(2);
     expect($routes->pluck('uri')->all())->toContain('one');
@@ -54,11 +54,11 @@ it('can register multiple routes on the same component', function () {
 
 it('can registrer a route with a single middleware', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/Middleware/OneMiddlewareComponent.php')
+        $this->getTestPath('Fixtures/Middleware/OneMiddlewareComponent.php'),
     );
 
-    $route = collect(Route::getRoutes())->first(fn ($r) =>
-        $r->uri === 'one-middleware'
+    $route = collect(Route::getRoutes())->first(
+        fn($r) => 'one-middleware' === $r->uri,
     );
 
     expect($route)->not->toBeNull();
@@ -67,11 +67,11 @@ it('can registrer a route with a single middleware', function () {
 
 it('can registrer a route with multiple middleware', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/Middleware/MultiMiddlewareComponent.php')
+        $this->getTestPath('Fixtures/Middleware/MultiMiddlewareComponent.php'),
     );
 
-    $route = collect(Route::getRoutes())->first(fn ($r) =>
-        $r->uri === 'multi-middleware'
+    $route = collect(Route::getRoutes())->first(
+        fn($r) => 'multi-middleware' === $r->uri,
     );
 
     expect($route)->not->toBeNull();
@@ -80,11 +80,11 @@ it('can registrer a route with multiple middleware', function () {
 
 it('does not register a component without Route attribute', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/NoAttributeComponent.php')
+        $this->getTestPath('Fixtures/NoAttributeComponent.php'),
     );
 
-    $route = collect(Route::getRoutes())->first(fn ($r) =>
-        $r->getActionName() === \Yamous\LivewireRouteAttributes\Tests\Fixtures\NoAttributeComponent::class
+    $route = collect(Route::getRoutes())->first(
+        fn($r) => Yamous\LivewireRouteAttributes\Tests\Fixtures\NoAttributeComponent::class === $r->getActionName(),
     );
 
     expect($route)->toBeNull();
@@ -92,11 +92,11 @@ it('does not register a component without Route attribute', function () {
 
 it('does not register a class that is not a Livewire component', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/NotAComponent.php')
+        $this->getTestPath('Fixtures/NotAComponent.php'),
     );
 
-    $route = collect(Route::getRoutes())->first(fn ($r) =>
-        $r->uri === 'not-livewire'
+    $route = collect(Route::getRoutes())->first(
+        fn($r) => 'not-livewire' === $r->uri,
     );
 
     expect($route)->toBeNull();
@@ -104,11 +104,11 @@ it('does not register a class that is not a Livewire component', function () {
 
 it('registers a route when methods is a string', function () {
     $this->routeRegistrar->registerFile(
-        $this->getTestPath('Fixtures/MethodsAsStringComponent.php')
+        $this->getTestPath('Fixtures/MethodsAsStringComponent.php'),
     );
 
     $route = collect(Route::getRoutes())
-        ->first(fn ($r) => $r->getActionName() === \Yamous\LivewireRouteAttributes\Tests\Fixtures\MethodsAsStringComponent::class);
+        ->first(fn($r) => Yamous\LivewireRouteAttributes\Tests\Fixtures\MethodsAsStringComponent::class === $r->getActionName());
 
     expect($route)->not->toBeNull();
     expect($route->methods)->toContain('POST');
@@ -118,7 +118,7 @@ it('can register all components in a directory', function () {
     $this->routeRegistrar->registerDirectory('Fixtures/RegisterDirectory');
 
     $routes = collect(Route::getRoutes())
-        ->filter(fn ($r) => str_starts_with($r->getActionName(), 'Yamous\LivewireRouteAttributes\Tests\Fixtures\RegisterDirectory'));
+        ->filter(fn($r) => str_starts_with($r->getActionName(), 'Yamous\LivewireRouteAttributes\Tests\Fixtures\RegisterDirectory'));
 
     expect($routes)->not->toBeEmpty();
     expect($routes->pluck('uri')->all())->toContain('first-component');

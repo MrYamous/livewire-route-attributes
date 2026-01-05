@@ -18,6 +18,6 @@ abstract class TestCase extends Orchestra
 
     public function getTestPath(?string $path = null): string
     {
-        return __DIR__.($path ? DIRECTORY_SEPARATOR.$path : '');
+        return __DIR__ . ($path ? DIRECTORY_SEPARATOR . $path : '');
     }
 }

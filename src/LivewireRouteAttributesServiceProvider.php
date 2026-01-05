@@ -3,18 +3,17 @@
 namespace Yamous\LivewireRouteAttributes;
 
 use Illuminate\Support\ServiceProvider;
-use Yamous\LivewireRouteAttributes\RouteRegistrar;
 
 class LivewireRouteAttributesServiceProvider extends ServiceProvider
 {
-    public function boot(): void 
+    public function boot(): void
     {
         $this->registerRoutes();
     }
 
     protected function registerRoutes(): void
     {
-        if (! $this->shouldRegisterRoutes()) {
+        if (!$this->shouldRegisterRoutes()) {
             return;
         }
 

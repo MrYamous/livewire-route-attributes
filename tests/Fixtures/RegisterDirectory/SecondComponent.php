@@ -8,5 +8,8 @@ use Yamous\LivewireRouteAttributes\Attributes\Route;
 #[Route('/second-component', name: 'second-component.index')]
 class SecondComponent extends Component
 {
-    public function render() { return 'ok'; }
+    public function render()
+    {
+        return 'ok';
+    }
 }

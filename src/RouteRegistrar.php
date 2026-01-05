@@ -4,17 +4,17 @@ namespace Yamous\LivewireRouteAttributes;
 
 use Illuminate\Routing\Router;
 use Livewire\Component;
-use ReflectionClass;
 use Symfony\Component\Finder\Finder;
 use Yamous\LivewireRouteAttributes\Attributes\Route as RouteAttribute;
 
 class RouteRegistrar
 {
     protected string $basePath;
+
     protected string $rootNamespace;
 
     public function __construct(
-        protected Router $router
+        protected Router $router,
     ) {}
 
     public function useBasePath(string $path): self
@@ -26,16 +26,16 @@ class RouteRegistrar
 
     public function useRootNamespace(string $namespace): self
     {
-        $this->rootNamespace = trim($namespace, '\\').'\\';
+        $this->rootNamespace = trim($namespace, '\\') . '\\';
 
         return $this;
     }
 
     public function registerDirectory(string $relativePath = ''): void
     {
-        $path = $this->basePath.'/'.$relativePath;
+        $path = $this->basePath . '/' . $relativePath;
 
-        $files = (new Finder)
+        $files = (new Finder())
             ->files()
             ->in($path)
             ->name('*.php')
@@ -52,7 +52,7 @@ class RouteRegistrar
 
         $class = $this->getFullyQualifiedClassName($path);
 
-        if (! class_exists($class)) {
+        if (!class_exists($class)) {
             return;
         }
 
@@ -67,15 +67,14 @@ class RouteRegistrar
         $relativePath = str_replace($realBase, '', $realPath);
         $relativePath = str_replace('.php', '', $relativePath);
 
-        return $this->rootNamespace
-            . str_replace(DIRECTORY_SEPARATOR, '\\', $relativePath);
+        return $this->rootNamespace . str_replace(DIRECTORY_SEPARATOR, '\\', $relativePath);
     }
 
     protected function registerRoutesForClass(string $class): void
     {
-        $reflection = new ReflectionClass($class);
+        $reflection = new \ReflectionClass($class);
 
-        if (! $reflection->isSubclassOf(Component::class)) {
+        if (!$reflection->isSubclassOf(Component::class)) {
             return;
         }
 
@@ -92,7 +91,7 @@ class RouteRegistrar
                 [
                     'uses' => $class,
                     'controller' => $class,
-                ]
+                ],
             );
 
             if ($route->name) {
@@ -105,4 +104,3 @@ class RouteRegistrar
         }
     }
 }
-
